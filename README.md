@@ -1,8 +1,8 @@
 <div align="center">
 
-# Causal Plan
+# Token Predictors Are Not Planners
 
-**Token Predictors Are Not Planners: Building Physically Grounded Causal Reasoners**
+**Building Physically Grounded Causal Reasoners**
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Shell](https://img.shields.io/badge/Shell-utilities-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white)
@@ -22,9 +22,9 @@
 
 ## Overview
 
-Causal Plan is a code release for studying embodied planning as physically grounded causal reasoning rather than surface-level next-token continuation. The project centers on the observation that plausible action sequences can still fail when they ignore hidden preconditions, object affordances, state transitions, temporal dependencies, or recovery constraints.
+This repository is the code release for **Token Predictors Are Not Planners: Building Physically Grounded Causal Reasoners**. The project studies embodied planning as physically grounded causal reasoning rather than surface-level next-token continuation, focusing on the observation that plausible action sequences can still fail when they ignore hidden preconditions, object affordances, state transitions, temporal dependencies, or recovery constraints.
 
-The released code supports the main technical components described in the accompanying paper:
+In the paper, Causal Plan denotes the framework and released resources. The code supports the main technical components described in the accompanying paper:
 
 - `Causal-Plan-Bench`: a 1,200-instance diagnostic suite across 12 benchmark tasks for physically grounded planning.
 - `Causal-Plan-1M`: a million-scale causal supervision pipeline spanning 20 task families with task-specific reasoning traces.
@@ -35,7 +35,7 @@ Benchmark data, training data, raw videos, model checkpoints, generated outputs,
 
 ## Causal Dimensions
 
-Causal Plan decomposes embodied planning into four diagnostic dimensions:
+The paper decomposes embodied planning into four diagnostic dimensions:
 
 | Dimension | What It Checks |
 | --- | --- |
@@ -131,7 +131,7 @@ The overall score is the macro-average across the 12 Causal-Plan-Bench tasks. Bo
 | Embodied-specific | RynnBrain | 8B | 37.43 | 43.33 | 34.33 | 33.97 | 38.07 |
 | Embodied-specific | Cosmos-Reason1 | 7B | 30.13 | 34.33 | 28.67 | 27.07 | 30.47 |
 | Embodied-specific | Cosmos-Reason2 | 8B | 34.48 | 40.00 | 32.67 | 32.03 | 33.20 |
-| Causal Plan | **Causal Planner** | 8B | **45.28 (+12.05)** | **48.00 (+9.33)** | **45.33 (+12.33)** | **42.60 (+14.50)** | **45.17 (+12.04)** |
+| This work | **Causal Planner** | 8B | **45.28 (+12.05)** | **48.00 (+9.33)** | **45.33 (+12.33)** | **42.60 (+14.50)** | **45.17 (+12.04)** |
 
 ### Cross-Benchmark Transfer
 
@@ -154,7 +154,7 @@ The average is the arithmetic mean over EgoPlan-Bench2, RoboVQA, and Cosmos-Reas
 | Embodied-specific | RynnBrain | 8B | 44.31 | 60.25 | 57.84 | 54.13 | 4 |
 | Embodied-specific | Cosmos-Reason1 | 7B | 26.87 | 43.75 | 61.80 | 44.14 | 12 |
 | Embodied-specific | Cosmos-Reason2 | 8B | 39.25 | 54.75 | **66.82** | 53.61 | 6 |
-| Causal Plan | **Causal Planner** | 8B | 45.32 (+3.45) | <u>63.43 (+4.88)</u> | 63.30 (+4.60) | 57.35 (+4.31) | 3 |
+| This work | **Causal Planner** | 8B | 45.32 (+3.45) | <u>63.43 (+4.88)</u> | 63.30 (+4.60) | 57.35 (+4.31) | 3 |
 
 ### Ablation Results
 
