@@ -10,7 +10,6 @@
 ![Training](https://img.shields.io/badge/Causal--Plan--1M-training%20pipeline-lightgrey?style=flat-square)
 
 [Overview](#overview) •
-[What Is Released](#what-is-released) •
 [Evaluation](#evaluation) •
 [Generation And Filtering](#generation-and-filtering) •
 [Training Utilities](#training-utilities) •
