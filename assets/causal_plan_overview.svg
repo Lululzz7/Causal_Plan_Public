@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Causal planning code release overview</title>
+  <desc id="desc">A visual overview of the repository pipeline from multimodal episodes to plans, QA, filtering, evaluation, and training utilities.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7fafc"/>
+      <stop offset="1" stop-color="#eef4f8"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d4ed8"/>
+      <stop offset="1" stop-color="#0891b2"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#047857"/>
+      <stop offset="1" stop-color="#65a30d"/>
+    </linearGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c2410c"/>
+      <stop offset="1" stop-color="#ca8a04"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .title { font: 700 34px Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; fill: #0f172a; }
+      .subtitle { font: 500 17px Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; fill: #475569; }
+      .label { font: 700 18px Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; fill: #0f172a; }
+      .small { font: 500 13px Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; fill: #475569; }
+      .tiny { font: 600 12px Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; fill: #64748b; letter-spacing: .02em; }
+      .white { fill: #ffffff; }
+      .box { fill: #ffffff; stroke: #d7e0e7; stroke-width: 1.2; rx: 20; filter: url(#shadow); }
+      .line { stroke: #64748b; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="560" rx="34" fill="url(#bg)"/>
+  <text x="600" y="58" text-anchor="middle" class="title">Causal Planning Code Release</text>
+  <text x="600" y="88" text-anchor="middle" class="subtitle">Generation, QA filtering, benchmark evaluation, causal traces, SFT, and RL reward scoring</text>
+
+  <rect x="70" y="148" width="190" height="118" class="box"/>
+  <rect x="96" y="173" width="44" height="44" rx="10" fill="url(#blue)"/>
+  <path d="M107 203 l10 -14 l10 9 l9 -13" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="165" y="190" class="label">Multimodal</text>
+  <text x="165" y="213" class="label">Episodes</text>
+  <text x="96" y="244" class="small">external videos, images,</text>
+  <text x="96" y="262" class="small">plans, and source context</text>
+
+  <path class="line" d="M265 207 C306 207 315 207 350 207"/>
+
+  <rect x="355" y="128" width="230" height="158" class="box"/>
+  <rect x="382" y="153" width="46" height="46" rx="12" fill="url(#green)"/>
+  <path d="M394 178 h22 M405 167 v22" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <text x="446" y="170" class="label">Four-Stage</text>
+  <text x="446" y="193" class="label">Generation</text>
+  <text x="382" y="226" class="small">draft plans, localize steps,</text>
+  <text x="382" y="244" class="small">refine keyframes, generate</text>
+  <text x="382" y="262" class="small">atomic action records</text>
+
+  <path class="line" d="M590 207 C632 207 641 207 675 207"/>
+
+  <rect x="680" y="128" width="230" height="158" class="box"/>
+  <rect x="707" y="153" width="46" height="46" rx="12" fill="url(#orange)"/>
+  <path d="M719 173 h22 M719 187 h16" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <text x="771" y="170" class="label">Task-Specific</text>
+  <text x="771" y="193" class="label">QA Generation</text>
+  <text x="707" y="226" class="small">20-task prompt registry,</text>
+  <text x="707" y="244" class="small">stage-one and stage-two</text>
+  <text x="707" y="262" class="small">QA generation pipelines</text>
+
+  <path class="line" d="M915 207 C957 207 966 207 1000 207"/>
+
+  <rect x="1005" y="128" width="125" height="158" class="box"/>
+  <rect x="1030" y="153" width="46" height="46" rx="12" fill="#334155"/>
+  <path d="M1042 176 l8 8 l16 -20" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1030" y="226" class="label">Filtered</text>
+  <text x="1030" y="249" class="label">QA Rows</text>
+  <text x="1030" y="270" class="small">score and audit</text>
+
+  <rect x="148" y="360" width="250" height="120" class="box"/>
+  <text x="178" y="397" class="label">QA Filtering</text>
+  <text x="178" y="423" class="small">Qwen two-axis scoring</text>
+  <text x="178" y="443" class="small">Gemini physical-logic scoring</text>
+  <text x="178" y="463" class="small">Strict binary audit path</text>
+
+  <rect x="475" y="360" width="250" height="120" class="box"/>
+  <text x="505" y="397" class="label">Benchmark Evaluation</text>
+  <text x="505" y="423" class="small">MCQ accuracy and open-QA</text>
+  <text x="505" y="443" class="small">rubric judge scoring with</text>
+  <text x="505" y="463" class="small">task-specific prompts</text>
+
+  <rect x="802" y="360" width="250" height="120" class="box"/>
+  <text x="832" y="397" class="label">Training Utilities</text>
+  <text x="832" y="423" class="small">SWIFT SFT conversion</text>
+  <text x="832" y="443" class="small">Causal Learner reward</text>
+  <text x="832" y="463" class="small">rule and judge components</text>
+
+  <path class="line" d="M795 286 C795 322 330 322 273 354"/>
+  <path class="line" d="M1068 286 C1068 332 655 332 600 354"/>
+  <path class="line" d="M1068 286 C1068 324 939 328 927 354"/>
+
+  <text x="600" y="525" text-anchor="middle" class="tiny">Code only: benchmark data, checkpoints, generated outputs, caches, and machine-specific job scripts are excluded.</text>
+</svg>
