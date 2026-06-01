@@ -1,19 +1,19 @@
 <div align="center">
 
-# Causal Planning Code Release
+# Causal Plan
 
-**Code release for multimodal causal-planning evaluation, data generation, QA filtering, causal trace generation, SFT preparation, and RL reward scoring.**
+**Token Predictors Are Not Planners: Building Physically Grounded Causal Reasoners**
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
 ![Shell](https://img.shields.io/badge/Shell-utilities-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white)
-![Data](https://img.shields.io/badge/benchmark%20data-external-lightgrey?style=flat-square)
-![Release](https://img.shields.io/badge/code%20release-public-blue?style=flat-square)
+![Benchmark](https://img.shields.io/badge/Causal--Plan--Bench-evaluation-blue?style=flat-square)
+![Training](https://img.shields.io/badge/Causal--Plan--1M-training%20pipeline-lightgrey?style=flat-square)
 
 [Overview](#overview) •
-[Getting Started](#getting-started) •
+[What Is Released](#what-is-released) •
 [Evaluation](#evaluation) •
-[Generation](#generation-and-filtering) •
-[Training](#training-utilities) •
+[Generation And Filtering](#generation-and-filtering) •
+[Training Utilities](#training-utilities) •
 [Repository Layout](#repository-layout)
 
 <img src="assets/paradigm_comparison.jpg" alt="Paradigm comparison for causal planning" width="96%">
@@ -22,33 +22,42 @@
 
 ## Overview
 
-This repository provides the source code for the main components of a multimodal causal-planning pipeline:
+Causal Plan is a code release for studying embodied planning as physically grounded causal reasoning rather than surface-level next-token continuation. The project centers on the observation that plausible action sequences can still fail when they ignore hidden preconditions, object affordances, state transitions, temporal dependencies, or recovery constraints.
 
-- Four-stage visual plan and atomic-action generation.
-- Task-specific QA generation over causal-planning outputs.
-- Post-generation QA filtering with visual-grounding, logical-coherence, and physical-logic checks.
-- Benchmark evaluation for MCQ and open-QA tasks.
-- Causal reasoning trace generation for QA rows.
-- SWIFT-compatible SFT data preparation.
-- Causal Learner reward code for RL training.
+The released code supports the main technical components described in the accompanying paper:
 
-Benchmark data, training data, model checkpoints, generated outputs, runtime caches, and machine-specific job scripts are intentionally not stored in this repository.
+- `Causal-Plan-Bench`: a 1,200-instance diagnostic suite across 12 benchmark tasks for physically grounded planning.
+- `Causal-Plan-1M`: a million-scale causal supervision pipeline spanning 20 task families with task-specific reasoning traces.
+- `Causal Planner`: a training setup that combines staged SFT preparation with task-specific RL reward scoring.
+- QA filtering and auditing code for visual grounding, logical coherence, and physical feasibility.
+
+Benchmark data, training data, raw videos, model checkpoints, generated outputs, runtime caches, and machine-specific job scripts are intentionally not stored in this repository.
+
+## Causal Dimensions
+
+Causal Plan decomposes embodied planning into four diagnostic dimensions:
+
+| Dimension | What It Checks |
+| --- | --- |
+| Executability | Whether the current visual state satisfies spatial and affordance preconditions before an action is attempted. |
+| Effects | Whether the model understands the state changes caused by an action. |
+| Composition | Whether local steps form a coherent long-horizon causal order. |
+| Robustness | Whether the model can diagnose failures, reason counterfactually, and recover from disrupted plans. |
+
+These dimensions are reflected throughout the evaluation prompts, QA generation templates, causal trace contracts, and reward rubrics in this repository.
 
 <p align="center">
   <img src="assets/data_generation_pipeline.png" alt="Data generation and curation pipeline" width="96%">
 </p>
 
-## Getting Started
+## What Is Released
 
-Clone the repository and install dependencies only for the module you need. For benchmark evaluation:
-
-```bash
-git clone <REPOSITORY_URL>
-cd <REPOSITORY_DIR>/evaluation
-python -m pip install -r requirements.txt
-```
-
-Model-backed generation, filtering, and evaluation require the relevant Azure OpenAI or OpenAI-compatible endpoint credentials documented in each module README.
+| Paper Component | Released Code | External Artifacts |
+| --- | --- | --- |
+| Causal-Plan-Bench | MCQ evaluation, open-QA generation, task-specific rubric judging, data validation, and model registry utilities for the 12-task benchmark protocol. | Benchmark data and media are not bundled. |
+| Causal-Plan-1M | Four-stage generation, 20-task QA generation, QA filtering, and causal trace generation code. | Generated training data and raw source videos are not bundled. |
+| Causal Planner SFT | SWIFT-compatible data conversion and configurable SFT launch wrapper. | Training data, checkpoints, and machine-specific launch scripts are not bundled. |
+| Causal Planner RL | Standalone Causal Learner reward package with rule rewards and optional multimodal rubric judging. | Rollout data, RL runner integration, and checkpoints are not bundled. |
 
 ## External Data Layout
 
@@ -63,7 +72,21 @@ benchmark_data/
 
 Place this directory at `benchmark_data/` under the repository root, or set `BENCHMARK_DATA_ROOT` explicitly.
 
+## Getting Started
+
+Clone the repository and install dependencies only for the module you need. For benchmark evaluation:
+
+```bash
+git clone <REPOSITORY_URL>
+cd <REPOSITORY_DIR>/evaluation
+python -m pip install -r requirements.txt
+```
+
+Model-backed generation, filtering, trace generation, and open-QA evaluation require the relevant Azure OpenAI or OpenAI-compatible endpoint credentials documented in each module README.
+
 ## Evaluation
+
+Causal-Plan-Bench is described in the paper as a held-out 1,200-instance diagnostic suite across 12 benchmark tasks. It uses a dual-format evaluation protocol: deterministic executability and effects tasks use MCQ scoring, while composition and robustness tasks use open-ended answers judged by task-specific causal rubrics.
 
 Validate prompt definitions, data structure, media references, and dry-run evaluation logic:
 
@@ -89,6 +112,17 @@ The validation script compiles the evaluation code, checks task-specific open-QA
 
 ## Generation And Filtering
 
+The data construction code follows the paper's four-stage protocol:
+
+| Stage | Released Entry Points |
+| --- | --- |
+| Global blueprinting | `stage1_plan_draft_generator.py` |
+| Temporal grounding | `stage2_step_localizer.py` |
+| Causal enrichment | `stage3_refine_keyframes.py` |
+| Atomic decomposition | `stage4_atomic_action_generator.py` |
+
+The QA generation and causal trace code covers the 20 task families used for Causal-Plan-1M-style supervision, with task-specific visual evidence formats, answer constraints, and trace contracts.
+
 Four-stage generation entry points:
 
 ```bash
@@ -112,13 +146,15 @@ python qa_filtering/score_existing_qa_gemini_physical_logic.py --help
 python qa_filtering/filter_existing_qa_physical_logic_audit.py --help
 ```
 
-The Qwen filter evaluates accurate visual grounding and general logical coherence in one pass. The Gemini physical-logic filter evaluates preconditions, causal dependencies, state transitions, timeline consistency, and physical feasibility.
+The Qwen filter evaluates accurate visual grounding and general logical coherence in one pass. The Gemini physical-logic filter evaluates precondition validity, causal dependency, state transition, timeline consistency, and physical feasibility. Both filters fail closed for malformed rows, missing evidence, parser errors, and judge runtime errors.
 
 <p align="center">
   <img src="assets/resource_statistics.png" alt="Resource statistics" width="92%">
 </p>
 
 ## Causal Trace Generation
+
+The causal trace generator adds task-specific reasoning traces to QA rows. Each trace is checked against task contracts covering visual evidence, preconditions, causal dependencies, physical feasibility, and the reasoning moves expected for the target task family.
 
 ```bash
 SOURCE_ROOT=<QA_INPUT_DIR> OUTPUT_ROOT=<QA_WITH_TRACES_DIR> \
@@ -156,7 +192,7 @@ Use the RL reward package from Python:
 from causal_learner_reward import compute_score
 ```
 
-See `rl_training/README.md` for the expected reward input schema and judge-backed scoring configuration.
+The reward package supports rule-based task rewards and optional multimodal rubric judging. See `rl_training/README.md` for the expected reward input schema and judge-backed scoring configuration.
 
 ## Repository Layout
 
@@ -172,6 +208,6 @@ See `rl_training/README.md` for the expected reward input schema and judge-backe
 
 ## Data Policy
 
-This repository intentionally excludes benchmark data, training data, model checkpoints, generated outputs, runtime caches, machine-specific job scripts, and environment-specific activation commands.
+This repository intentionally excludes benchmark data, training data, raw videos, model checkpoints, generated outputs, runtime caches, machine-specific job scripts, and environment-specific activation commands.
 
 All prompt content required by the active generation, filtering, evaluation, SFT, and reward code is stored in Python or shell source files. Markdown files are kept only as README files.
