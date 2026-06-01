@@ -16,7 +16,7 @@
 [Training](#training-utilities) •
 [Repository Layout](#repository-layout)
 
-<img src="assets/causal_plan_overview.svg" alt="Causal planning code release overview" width="96%">
+<img src="assets/paradigm_comparison.jpg" alt="Paradigm comparison for causal planning" width="96%">
 
 </div>
 
@@ -35,7 +35,7 @@ This repository provides the source code for the main components of a multimodal
 Benchmark data, training data, model checkpoints, generated outputs, runtime caches, and machine-specific job scripts are intentionally not stored in this repository.
 
 <p align="center">
-  <img src="assets/module_map.svg" alt="Repository module map" width="92%">
+  <img src="assets/data_generation_pipeline.png" alt="Data generation and curation pipeline" width="96%">
 </p>
 
 ## Getting Started
@@ -83,6 +83,10 @@ bash run_full_benchmark_evaluation.sh
 
 The validation script compiles the evaluation code, checks task-specific open-QA judge prompts, verifies MCQ and open-QA rows, checks media availability, and runs dry-run evaluation without model API calls. The full evaluation script runs MCQ evaluation and open-QA generation plus rubric judging. Model aliases and provider settings are defined in `evaluation/open_qa_model_registry.json`.
 
+<p align="center">
+  <img src="assets/performance_overview.png" alt="Benchmark performance overview" width="96%">
+</p>
+
 ## Generation And Filtering
 
 Four-stage generation entry points:
@@ -109,6 +113,10 @@ python qa_filtering/filter_existing_qa_physical_logic_audit.py --help
 ```
 
 The Qwen filter evaluates accurate visual grounding and general logical coherence in one pass. The Gemini physical-logic filter evaluates preconditions, causal dependencies, state transitions, timeline consistency, and physical feasibility.
+
+<p align="center">
+  <img src="assets/resource_statistics.png" alt="Resource statistics" width="92%">
+</p>
 
 ## Causal Trace Generation
 
