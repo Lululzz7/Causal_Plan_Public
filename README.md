@@ -1,13 +1,24 @@
 <div align="center">
 
-# Token Predictors Are Not Planners
+# *Token Predictors Are Not Planners*: Building Physically Grounded Causal Reasoners
 
-**Building Physically Grounded Causal Reasoners**
+Zheng Lu<sup>1,2,*</sup>, Mingqi Gao<sup>1,*</sup>, Qinlei Xie<sup>1,*</sup>, Wanqi Zhong<sup>1</sup>, Hanwen Cui<sup>1</sup>, Heng Cao<sup>1</sup>, Zirui Song<sup>3</sup>, Yifan Yang<sup>2</sup>, Chong Luo<sup>2</sup>, Bei Liu<sup>2,&dagger;</sup>, Yiming Li<sup>1,&dagger;</sup>
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
-![Shell](https://img.shields.io/badge/Shell-utilities-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white)
-![Benchmark](https://img.shields.io/badge/Causal--Plan--Bench-evaluation-blue?style=flat-square)
-![Training](https://img.shields.io/badge/Causal--Plan--1M-training%20pipeline-lightgrey?style=flat-square)
+<sup>1</sup>Tsinghua University &nbsp;&nbsp; <sup>2</sup>Microsoft Research Asia &nbsp;&nbsp; <sup>3</sup>MBZUAI
+
+<sup>*</sup>Equal contribution &nbsp;&nbsp; <sup>&dagger;</sup>Corresponding authors
+
+<p>
+  <a href="https://huggingface.co/Lululzz/Causal_Planner">
+    <img src="https://img.shields.io/badge/Model-Causal_Planner-yellow?style=flat-square" alt="Model">
+  </a>
+  <a href="https://huggingface.co/datasets/anonymous-causal-plan/Causal_Plan/tree/main/CausalPlan-1M-QA">
+    <img src="https://img.shields.io/badge/Dataset-CausalPlan--1M--QA-blue?style=flat-square" alt="Dataset">
+  </a>
+  <a href="https://huggingface.co/datasets/anonymous-causal-plan/Causal_Plan/tree/main/Causal-Plan-Bench">
+    <img src="https://img.shields.io/badge/Benchmark-Causal--Plan--Bench-orange?style=flat-square" alt="Benchmark">
+  </a>
+</p>
 
 [Overview](#overview) •
 [Evaluation](#evaluation) •
